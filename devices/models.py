@@ -15,6 +15,9 @@ class TemperatureReading(models.Model):
     class Meta:
         ordering = ['timestamp']
 
+    def __str__(self):
+        return self.device.name
+
 class HumidityReading(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE, related_name='humidity_readings')
     timestamp = models.DateTimeField()
@@ -22,3 +25,6 @@ class HumidityReading(models.Model):
 
     class Meta:
         ordering = ['timestamp']
+    
+    def __str__(self):
+        return self.device.name
