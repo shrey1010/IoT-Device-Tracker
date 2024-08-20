@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ device.name }} - Temperature and Humidity Graph</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
 </head>
 <body>
     <h1>Temperature and Humidity for {{ device.name }}</h1>
@@ -17,16 +18,16 @@
         
         const humidityLabels = {{ humidity_labels|safe }};
         const humidityData = {{ humidity_data|safe }};
-        
+
         // Temperature Chart
         const ctxTemp = document.getElementById('temperatureChart').getContext('2d');
         const temperatureChart = new Chart(ctxTemp, {
             type: 'line',
             data: {
-                labels: JSON.parse(temperatureLabels),
+                labels: temperatureLabels,
                 datasets: [{
                     label: 'Temperature (°C)',
-                    data: JSON.parse(temperatureData),
+                    data: temperatureData,
                     borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 2,
                     fill: false,
@@ -52,10 +53,10 @@
         const humidityChart = new Chart(ctxHum, {
             type: 'line',
             data: {
-                labels: JSON.parse(humidityLabels),
+                labels: humidityLabels,
                 datasets: [{
                     label: 'Humidity (%)',
-                    data: JSON.parse(humidityData),
+                    data: humidityData,
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 2,
                     fill: false,
