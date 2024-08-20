@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Device, TemperatureReading, HumidityReading
 from .serializers import DeviceSerializer, TemperatureReadingSerializer, HumidityReadingSerializer
+from django.shortcuts import render
+from django.http import HttpResponseBadRequest
 
 @api_view(['POST'])
 def create_device(request):
@@ -59,3 +61,26 @@ def list_readings(request, device_uid, parameter):
         return Response({"error": "Invalid parameter. Use 'temperature' or 'humidity'."}, status=status.HTTP_400_BAD_REQUEST)
     
     return Response(serializer.data)
+
+
+def device_graph(request):
+    device_uid = request.GET.get('device_uid')
+    
+    if not device_uid:
+        return HttpResponseBadRequest("Device UID is required")
+    
+    try:
+        device = Device.objects.get(uid=device_uid)
+    except Device.DoesNotExist:
+        return HttpResponseBadRequest("Device not found")
+    
+    temperature_readings = TemperatureReading.objects.filter(device=device).order_by('timestamp')
+    humidity_readings = HumidityReading.objects.filter(device=device).order_by('timestamp')
+    
+    context = {
+        'device': device,
+        'temperature_readings': temperature_readings,
+        'humidity_readings': humidity_readings,
+    }
+    
+    return render(request, 'devices/graph.html', context)
