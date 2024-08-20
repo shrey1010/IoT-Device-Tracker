@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "f4ef2711-ca22-44e1-949d-252e137be2af",
+		"name": "IoT Device Tracker",
+		"description": "Postman collection for testing the IoT Device Tracker APIs.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26182837"
+	},
+	"item": [
+		{
+			"name": "Create a Device",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/devices",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Device",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/devices/delete/123467/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"devices",
+						"delete",
+						"123467",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve a Device",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/devices/{{device-uid}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"devices",
+						"{{device-uid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List All Devices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/devices",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"devices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Readings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/devices/1234/readings/humidity?start_on=2024-08-18T00:00:00&end_on=2024-08-21T00:00:00",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"devices",
+						"1234",
+						"readings",
+						"humidity"
+					],
+					"query": [
+						{
+							"key": "start_on",
+							"value": "2024-08-18T00:00:00"
+						},
+						{
+							"key": "end_on",
+							"value": "2024-08-21T00:00:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Device",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"uid\": \"123467\",\n  \"name\": \"Test Device\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/add/devices/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"add",
+						"devices",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "visualize data",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"uid\": \"123467\",\n  \"name\": \"Test Device\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/devices-graph/?device_uid=device-uid-1234",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"devices-graph",
+						""
+					],
+					"query": [
+						{
+							"key": "device_uid",
+							"value": "device-uid-1234"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
