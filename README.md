@@ -109,6 +109,10 @@ The IoT Device Tracker is a Django-based web application that allows you to mana
 - **Query Parameters**:
   - `device_uid` (string): The UID of the device.
 - **Response**: An HTML page with graphs displaying the temperature and humidity data over time.
+![Alt text](images/temperature.png)
+![Alt text](images/humidity.png)
+![Alt text](images/complete.png)
+
 
 ### Example Usage
 
