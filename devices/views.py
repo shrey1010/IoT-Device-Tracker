@@ -5,6 +5,8 @@ from .models import Device, TemperatureReading, HumidityReading
 from .serializers import DeviceSerializer, TemperatureReadingSerializer, HumidityReadingSerializer
 from django.shortcuts import render
 from django.http import HttpResponseBadRequest
+from django.core.serializers.json import DjangoJSONEncoder
+import json
 
 @api_view(['POST'])
 def create_device(request):
@@ -76,11 +78,23 @@ def device_graph(request):
     
     temperature_readings = TemperatureReading.objects.filter(device=device).order_by('timestamp')
     humidity_readings = HumidityReading.objects.filter(device=device).order_by('timestamp')
-    
+
+    temperature_data = [{
+        'timestamp': reading.timestamp,
+        'temperature': reading.temperature
+    } for reading in temperature_readings]
+
+    humidity_data = [{
+        'timestamp': reading.timestamp,
+        'humidity': reading.humidity
+    } for reading in humidity_readings]
+
     context = {
         'device': device,
-        'temperature_readings': temperature_readings,
-        'humidity_readings': humidity_readings,
+        'temperature_labels': json.dumps([reading['timestamp'].strftime('%Y-%m-%dT%H:%M:%S') for reading in temperature_data], cls=DjangoJSONEncoder),
+        'temperature_data': json.dumps([reading['temperature'] for reading in temperature_data], cls=DjangoJSONEncoder),
+        'humidity_labels': json.dumps([reading['timestamp'].strftime('%Y-%m-%dT%H:%M:%S') for reading in humidity_data], cls=DjangoJSONEncoder),
+        'humidity_data': json.dumps([reading['humidity'] for reading in humidity_data], cls=DjangoJSONEncoder),
     }
     
     return render(request, 'devices/graph.html', context)

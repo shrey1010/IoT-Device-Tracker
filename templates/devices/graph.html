@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ device.name }} - Temperature and Humidity Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Temperature and Humidity for {{ device.name }}</h1>
+    <canvas id="temperatureChart" width="400" height="200"></canvas>
+    <canvas id="humidityChart" width="400" height="200"></canvas>
+
+    <script>
+        const temperatureLabels = {{ temperature_labels|safe }};
+        const temperatureData = {{ temperature_data|safe }};
+        
+        const humidityLabels = {{ humidity_labels|safe }};
+        const humidityData = {{ humidity_data|safe }};
+        
+        // Temperature Chart
+        const ctxTemp = document.getElementById('temperatureChart').getContext('2d');
+        const temperatureChart = new Chart(ctxTemp, {
+            type: 'line',
+            data: {
+                labels: JSON.parse(temperatureLabels),
+                datasets: [{
+                    label: 'Temperature (°C)',
+                    data: JSON.parse(temperatureData),
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'minute'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Humidity Chart
+        const ctxHum = document.getElementById('humidityChart').getContext('2d');
+        const humidityChart = new Chart(ctxHum, {
+            type: 'line',
+            data: {
+                labels: JSON.parse(humidityLabels),
+                datasets: [{
+                    label: 'Humidity (%)',
+                    data: JSON.parse(humidityData),
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'minute'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
